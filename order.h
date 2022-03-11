@@ -7,7 +7,7 @@
 #include "product.h"
 #include "line.h"
 
-using std::string, std::vector;
+using std::vector;
 
 static int itsNbOrders = 0;
 
@@ -15,7 +15,7 @@ class Order
 {
 private:
     int itsNo = itsNbOrders;
-    double itsPrice = for(int i=0; itsLine->size(); i++){itsLine[l]->getItsProduct->};
+    double itsPrice;
     string itsDate;
     vector <Line*> * itsLine;
     Address *itsDeliveryAddress;

@@ -1,7 +1,7 @@
 #include "order.h"
 
 
-Order::Order(std::string date, Address *deliveryAdress):
+Order::Order(string date, Address *deliveryAdress):
     itsDate(date), itsDeliveryAddress(deliveryAdress)
 {
     itsLine = new vector <Line*>();
@@ -31,6 +31,7 @@ void Order::addLine(int quantity, Product *product)
 {
     itsLine->push_back(new Line(quantity, product));
     itsNbOrders++;
+    itsPrice += product->getItsPrice()*quantity;
 }
 
 void Order::removeLine(Product *product)
@@ -38,11 +39,11 @@ void Order::removeLine(Product *product)
     for (unsigned int i = 0; i < itsLine->size(); i++)
         if (itsLine->at(i)->getItsProduct() == product)
         {
+            itsNbOrders--;
+            itsPrice -= product->getItsPrice() * itsLine->at(i)->getItsQuantity();
             delete itsLine->at(i);
             itsLine->erase(itsLine->begin()+i);
-            itsNbOrders--;
             return;
-
         }
 }
 
@@ -51,7 +52,9 @@ void Order::modifyLine(int quantity, Product *product)
     for (unsigned int i = 0; i < itsLine->size(); i++)
         if (itsLine->at(i)->getItsProduct() == product)
         {
+            itsPrice -= product->getItsPrice()*quantity;
             itsLine->at(i)->setItsQuantity(quantity);
+            itsPrice += product->getItsPrice()*quantity;
             return;
         }
 }
