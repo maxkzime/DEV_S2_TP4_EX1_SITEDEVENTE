@@ -1,14 +1,19 @@
+// TP4/EX1/client.cpp
+// Exercice 1 : Site de vente
+// BODIN Maxime C2
+// 22/10/03
+
 #include "client.h"
 
-#include <iostream>
-
-using std::cout;
-
-Client::Client(std::string forename, std::string lastname, Address *adress) :
-    itsForename(forename), itsLastname(lastname), itsAddress(adress)
-{
-    itsOrder = new vector<Order*>();
-}
+Client::Client(std::string forename,
+               std::string lastname,
+               Address *adress)
+    :
+      itsForename(forename),
+      itsLastname(lastname),
+      itsAddress(adress),
+      itsOrder(new vector<Order*>())
+{}
 
 Client::~Client()
 {
@@ -21,23 +26,22 @@ Client::~Client()
 }
 
 void Client::addOrder(Order *order)
-{
-    itsOrder->push_back(order);
-}
+{itsOrder->push_back(order);}
 
 void Client::display()
 {
-    cout << "Forename : " << itsForename << '\n';
-    cout << "Lastname : " << itsLastname << '\n';
-    cout << "Address : " << itsAddress << '\n';
+    cout << "Forename : " << itsForename << '\n'
+         << "Lastname : " << itsLastname << '\n'
+         << "Address : "; itsAddress->display();
+    cout << '\n'
+         << "Commandes :";
 
-    for (auto temp : *itsOrder)
-    {
-        cout << "\n\n";
-        cout << "No : " << temp->getItsNo() << '\n';
-        cout << "Price : " << temp->getItsPrice() << '\n';
-        cout << "Date : " << temp->getItsDate() << '\n';
-
+    if(!itsOrder->empty()){
+        for (Order * tempOrder : *itsOrder){
+            cout << '\n';
+            tempOrder->display();
+        }
     }
-
+    else
+        cout << "\nPas de commande pour l'instant\n";
 }

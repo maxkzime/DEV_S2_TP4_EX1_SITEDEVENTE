@@ -1,10 +1,12 @@
+// TP4/EX1/client.h
+// Exercice 1 : Site de vente
+// BODIN Maxime C2
+// 22/10/03
+
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "address.h" // string already include here
-#include "order.h"  // vector already include here
-
-using std::string, std::vector;
+#include "order.h"
 
 class Client
 {
@@ -15,7 +17,9 @@ private:
     vector <Order*> * itsOrder;
 
 public:
-    Client(string forename, string lastname, Address *adress);
+    Client(string forename,
+           string lastname,
+           Address *adress);
     ~Client();
 
     void addOrder(Order* order);

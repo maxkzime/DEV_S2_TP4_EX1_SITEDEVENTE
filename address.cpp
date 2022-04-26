@@ -1,7 +1,19 @@
+// TP4/EX1/address.cpp
+// Exercice 1 : Site de vente
+// BODIN Maxime C2
+// 22/10/03
+
 #include "address.h"
 
-Address::Address(int no, string streetName, int postalCode, string city):
-    itsNo(no), itsStreetName(streetName), itsPostalCode(postalCode), itsCity(city)
+Address::Address(int no,
+                 string streetName,
+                 int postalCode,
+                 string city)
+    :
+    itsNo(no),
+    itsStreetName(streetName),
+    itsPostalCode(postalCode),
+    itsCity(city)
 {}
 
 
@@ -16,4 +28,12 @@ int Address::getItsPostalCode() const
 
 const string &Address::getItsCity() const
 {return itsCity;}
+
+void Address::display()
+{
+    cout << getItsNo()<< ", "
+         << getItsStreetName() << ", "
+         << getItsCity() << ", "
+         << getItsPostalCode();
+}
 

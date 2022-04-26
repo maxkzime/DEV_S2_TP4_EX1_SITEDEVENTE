@@ -1,11 +1,19 @@
+// TP4/EX1/order.cpp
+// Exercice 1 : Site de vente
+// BODIN Maxime C2
+// 22/10/03
+
 #include "order.h"
 
 
-Order::Order(string date, Address *deliveryAdress):
-    itsDate(date), itsDeliveryAddress(deliveryAdress)
-{
-    itsLine = new vector <Line*>();
-}
+
+Order::Order(string date,
+             Address *deliveryAdress)
+    :
+      itsDate(date),
+      itsLine(new vector <Line*>()),
+      itsDeliveryAddress(deliveryAdress)
+{itsNbOrders++;}
 
 Order::~Order()
 {
@@ -20,8 +28,12 @@ Order::~Order()
 int Order::getItsNo() const
 {return itsNo;}
 
-double Order::getItsPrice() const
-{return itsPrice;}
+double Order::getItsPrice()
+{
+    //    for(Line * tempPtr : *itsLine)
+    //        itsPrice += tempPtr->getItsQuantity() * tempPtr->getItsProduct()->getItsPrice();
+    return itsPrice;
+}
 
 const string &Order::getItsDate() const
 {return itsDate;}
@@ -29,9 +41,20 @@ const string &Order::getItsDate() const
 
 void Order::addLine(int quantity, Product *product)
 {
-    itsLine->push_back(new Line(quantity, product));
-    itsNbOrders++;
-    itsPrice += product->getItsPrice()*quantity;
+    bool alreadyExists = false;
+    for (unsigned int i = 0; i < itsLine->size(); i++)
+        if (itsLine->at(i)->getItsProduct() == product)
+        {
+            alreadyExists = true;
+            itsPrice += product->getItsPrice()*quantity;
+            int currQuantity = itsLine->at(i)->getItsQuantity();
+            itsLine->at(i)->setItsQuantity(currQuantity+quantity);
+        }
+
+    if(!alreadyExists){
+        itsLine->push_back(new Line(quantity, product));
+        itsPrice += product->getItsPrice()*quantity;
+    }
 }
 
 void Order::removeLine(Product *product)
@@ -39,11 +62,13 @@ void Order::removeLine(Product *product)
     for (unsigned int i = 0; i < itsLine->size(); i++)
         if (itsLine->at(i)->getItsProduct() == product)
         {
-            itsNbOrders--;
             itsPrice -= product->getItsPrice() * itsLine->at(i)->getItsQuantity();
             delete itsLine->at(i);
             itsLine->erase(itsLine->begin()+i);
-            return;
+
+            /*if(itsLine->at(i)->getItsQuantity() == 0){
+            }*/
+            break;
         }
 }
 
@@ -54,10 +79,24 @@ void Order::modifyLine(int quantity, Product *product)
         {
             itsPrice -= product->getItsPrice()*quantity;
             itsLine->at(i)->setItsQuantity(quantity);
-            itsPrice += product->getItsPrice()*quantity;
-            return;
+            break;
         }
 }
 
 
+vector<Line *> *Order::getItsLine() const
+{return itsLine;}
 
+void Order::display()
+{
+    cout << "\n--==--===--==--\n";
+    cout << "No : "     << getItsNo()       << '\n';
+    cout << "Price : "  << getItsPrice()    << "€ \n";
+    cout << "Date : "   << getItsDate()     << '\n';
+
+    for(Line * templines : *getItsLine()){
+        templines->display();
+    }
+
+    cout << "--==--===--==--\n";
+}
