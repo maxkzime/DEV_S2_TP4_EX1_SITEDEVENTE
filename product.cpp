@@ -30,8 +30,8 @@ double Product::getItsPrice() const
 
 void Product::display()
 {
-    cout << "Code : "   << getItsCode() << " #"
-         << "Brand : " << getItsBrand() << " #"
-         << "Name : " << getItsName() << " #"
-         << "Price : " << getItsPrice() << "€ #\n";
+    cout << "Code: "   << getItsCode() << " #"
+         << "Brand: " << getItsBrand() << " #"
+         << "Name: " << getItsName() << " #"
+         << "Price: " << getItsPrice() << "€ #\n";
 }

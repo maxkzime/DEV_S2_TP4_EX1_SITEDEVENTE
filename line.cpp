@@ -25,7 +25,7 @@ Product *Line::getItsProduct() const
 
 void Line::display()
 {
-    cout << "\nQuantité : " << getItsQuantity() << " -> ";
+    cout << "\nQuantité: " << getItsQuantity() << " -> ";
     getItsProduct()->display();
 }
 

@@ -30,11 +30,11 @@ void Client::addOrder(Order *order)
 
 void Client::display()
 {
-    cout << "Forename : " << itsForename << '\n'
-         << "Lastname : " << itsLastname << '\n'
-         << "Address : "; itsAddress->display();
+    cout << "Forename: " << itsForename << '\n'
+         << "Lastname: " << itsLastname << '\n'
+         << "Address: "; itsAddress->display();
     cout << '\n'
-         << "Commandes :";
+         << "Commandes: ";
 
     if(!itsOrder->empty()){
         for (Order * tempOrder : *itsOrder){

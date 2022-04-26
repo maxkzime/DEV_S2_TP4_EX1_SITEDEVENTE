@@ -5,8 +5,6 @@
 
 #include "order.h"
 
-
-
 Order::Order(string date,
              Address *deliveryAdress)
     :
@@ -65,9 +63,6 @@ void Order::removeLine(Product *product)
             itsPrice -= product->getItsPrice() * itsLine->at(i)->getItsQuantity();
             delete itsLine->at(i);
             itsLine->erase(itsLine->begin()+i);
-
-            /*if(itsLine->at(i)->getItsQuantity() == 0){
-            }*/
             break;
         }
 }
@@ -77,9 +72,13 @@ void Order::modifyLine(int quantity, Product *product)
     for (unsigned int i = 0; i < itsLine->size(); i++)
         if (itsLine->at(i)->getItsProduct() == product)
         {
-            itsPrice -= product->getItsPrice()*quantity;
-            itsLine->at(i)->setItsQuantity(quantity);
-            break;
+            if(quantity == 0)
+                removeLine(product);
+            else{
+                itsPrice += product->getItsPrice()*(quantity-itsLine->at(i)->getItsQuantity());
+                itsLine->at(i)->setItsQuantity(quantity);
+                break;
+            }
         }
 }
 
@@ -90,9 +89,9 @@ vector<Line *> *Order::getItsLine() const
 void Order::display()
 {
     cout << "\n--==--===--==--\n";
-    cout << "No : "     << getItsNo()       << '\n';
-    cout << "Price : "  << getItsPrice()    << "€ \n";
-    cout << "Date : "   << getItsDate()     << '\n';
+    cout << "No: "     << getItsNo()       << '\n';
+    cout << "Price: "  << getItsPrice()    << "€ \n";
+    cout << "Date: "   << getItsDate()     << '\n';
 
     for(Line * templines : *getItsLine()){
         templines->display();
